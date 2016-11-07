@@ -1,0 +1,11 @@
+rootProject.name = 'xptraining'
+include 'demo 1 - delayed'
+include 'demo 2 - greeting'
+include 'demo 3 - code smells'
+include 'lab 1 - spacebook'
+include 'lab 2 - dracula'
+include 'lab 3 - petshop'
+include 'lab 4 - flight'
+include 'lab 5 - movierental'
+include 'lab 6 - battle'
+

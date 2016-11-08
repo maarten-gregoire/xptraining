@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,7 +36,7 @@ public class PersonTest {
     @Test
     public void Person_givenListOfFriends_thenHasFriends() {
         Person person = new Person("randomUsername");
-        List<Person> friends = person.getFriends();
+        Set<Person> friends = person.getFriends();
         assertThat(friends).isNotNull();
     }
 
@@ -58,28 +59,26 @@ public class PersonTest {
 
     @Test
     public void Person_givenMessageFromFriend_thenCanReceive() {
-        Message message1 = new Message();
-        Message message2 = new Message();
         Person person = new Person("Jim");
         Person friend = new Person("Joe");
         person.addFriend(friend);
 
-        person.receiveMessage(message1, friend);
-        person.receiveMessage(message2, friend);
+        Message message1 = new Message(Instant.EPOCH, friend, "Seperated");
+        Message message2 = new Message(Instant.EPOCH, friend, "Messages");
+
+        person.receiveMessage(message1);
+        person.receiveMessage(message2);
 
         List<Message> messages = person.getMessages();
-        assertThat(messages).contains(message1, message2);
-
-        assertThat(messages.get(0)).isNotEqualTo(messages.get(1));
-
+        assertThat(messages).containsExactly(message1, message2);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void Person_givenMessageFromStranger_thenCannotReceive() {
-        Message message = new Message();
         Person person = new Person("Jim");
-        Person friend = new Person("Joe");
+        Person stranger = new Person("Joe");
+        Message message = new Message(Instant.EPOCH, stranger, "Hello stranger.");
 
-        person.receiveMessage(message, friend);
+        person.receiveMessage(message);
     }
 }

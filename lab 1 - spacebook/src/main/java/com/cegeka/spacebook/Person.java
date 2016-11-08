@@ -1,14 +1,16 @@
 package com.cegeka.spacebook;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by glennb on 8/11/2016.
  */
 public class Person {
 
-    private ArrayList<Person> friends = new ArrayList<>();
+    private Set<Person> friends = new HashSet<>();
     private ArrayList<Message> messages = new ArrayList<>();
 
     public Person(String username) {
@@ -17,7 +19,7 @@ public class Person {
         }
     }
 
-    public List<Person> getFriends() {
+    public Set<Person> getFriends() {
         return friends;
     }
 
@@ -33,8 +35,8 @@ public class Person {
         person.getFriends().add(this);
     }
 
-    public void receiveMessage(Message message, Person sender) {
-        if (!getFriends().contains(sender)) {
+    public void receiveMessage(Message message) {
+        if (!getFriends().contains(message.getSender())) {
             throw new IllegalArgumentException("Sender is not a friend!");
         }
 

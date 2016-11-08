@@ -8,6 +8,6 @@ public class Hunter {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(huntingTime);
         int huntingHour = calendar.get(Calendar.HOUR_OF_DAY);
-        return huntingHour > 0 && huntingHour < 6;
+        return huntingHour >= 0 && huntingHour < 6;
     }
 }

@@ -14,4 +14,16 @@ public class BareFistTest {
         assertThat(fist.getDamage()).isEqualTo(1);
     }
 
+    @Test
+    public void BareFist_hasNoBonusVsOthers() {
+        BareFist fist = new BareFist();
+        Axe axe = new Axe();
+        Sword sword = new Sword();
+        Spear spear = new Spear();
+        assertThat(fist.getBonusDmgVs(sword)).isEqualTo(0);
+        assertThat(fist.getBonusDmgVs(fist)).isEqualTo(0);
+        assertThat(fist.getBonusDmgVs(axe)).isEqualTo(0);
+        assertThat(fist.getBonusDmgVs(spear)).isEqualTo(0);
+    }
+
 }

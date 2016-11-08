@@ -24,4 +24,13 @@ public class FightTest {
         Fight fight = new Fight(attacker, defender);
         assertThat(fight.determineWinner()).isSameAs(attacker);
     }
+
+    @Test
+    public void Fight_weakerWeaponLoses() {
+        Soldier fistSoldier = new Soldier("Caveman");
+        Soldier swordSoldier = new Soldier("Legionnaire", new Sword());
+        Fight fight = new Fight(swordSoldier, fistSoldier);
+        assertThat(fight.determineWinner()).isSameAs(swordSoldier);
+    }
+
 }

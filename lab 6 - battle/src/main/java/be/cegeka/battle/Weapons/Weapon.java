@@ -6,5 +6,6 @@ package be.cegeka.battle.Weapons;
 public abstract class Weapon {
 
     public abstract int getDamage();
+    public abstract int getBonusDmgVs(Weapon weapon);
 
 }

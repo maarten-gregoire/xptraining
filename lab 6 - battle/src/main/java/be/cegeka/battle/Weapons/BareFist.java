@@ -12,4 +12,9 @@ public class BareFist extends Weapon {
         return 1;
     }
 
+    @Override
+    public int getBonusDmgVs(Weapon weapon) {
+        return 0;
+    }
+
 }

@@ -5,7 +5,7 @@ import be.cegeka.battle.Weapons.Weapon;
 
 public class Soldier {
 
-    private final String name;
+    private String name;
     private Weapon weapon;
 
     public Soldier(String name) {
@@ -17,10 +17,7 @@ public class Soldier {
     }
 
     public Soldier(String name, Weapon weapon) {
-        if(name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException();
-        }
-        this.name = name;
+        this(name);
         this.weapon = weapon;
     }
 

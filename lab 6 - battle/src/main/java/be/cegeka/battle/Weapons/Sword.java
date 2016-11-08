@@ -12,4 +12,9 @@ public class Sword extends Weapon {
         return 2;
     }
 
+    @Override
+    public int getBonusDmgVs(Weapon weapon) {
+        return 0;
+    }
+
 }

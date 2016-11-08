@@ -8,9 +8,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SoldierTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenConstructed_mustHaveName() {
+    public void whenConstructed_mustHaveNameNotNull() {
         Soldier soldierNull = new Soldier(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenConstructed_mustHaveNameNotEmpty() {
         Soldier soldierEmpty = new Soldier("");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenConstructed_mustHaveNameNotAllSpaces() {
         Soldier soldierSpace = new Soldier("    ");
     }
 

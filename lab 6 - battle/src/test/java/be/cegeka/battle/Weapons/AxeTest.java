@@ -15,4 +15,21 @@ public class AxeTest {
         assertThat(axe.getDamage()).isEqualTo(3);
     }
 
+    @Test
+    public void Axe_hasBonusVsSpears() {
+        Axe axe = new Axe();
+        Spear spear = new Spear();
+        assertThat(axe.getBonusDmgVs(spear)).isEqualTo(3);
+    }
+
+    @Test
+    public void Axe_hasNoBonusVsOthers() {
+        Axe axe = new Axe();
+        Sword sword = new Sword();
+        BareFist fist = new BareFist();
+        assertThat(axe.getBonusDmgVs(sword)).isEqualTo(0);
+        assertThat(axe.getBonusDmgVs(fist)).isEqualTo(0);
+        assertThat(axe.getBonusDmgVs(axe)).isEqualTo(0);
+    }
+
 }

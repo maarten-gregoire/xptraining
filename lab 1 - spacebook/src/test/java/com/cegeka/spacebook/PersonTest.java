@@ -7,28 +7,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PersonTest {
 
     @Test
-    public void Person_givenUsername_thenPersonCreated() throws Exception {
+    public void Person_givenUsername_thenPersonCreated(){
         Person person = new Person("randomUsername");
         assertThat(person).isNotNull();
     }
 
-    @Test (expected = Exception.class)
-    public void Person_givenUsernameNull_thenThrowException() throws Exception {
-        Person person = new Person(null);
+    @Test (expected = IllegalArgumentException.class)
+    public void Person_givenUsernameNull_thenThrowException(){
+        new Person(null);
     }
 
-    @Test (expected = Exception.class)
-    public void Person_givenUsernameEmpty_thenThrowException() throws Exception {
-        Person person = new Person("");
+    @Test (expected = IllegalArgumentException.class)
+    public void Person_givenUsernameEmpty_thenThrowException(){
+        new Person("");
     }
 
-    @Test (expected = Exception.class)
-    public void Person_givenUsernameSpaces_thenThrowException() throws Exception{
-        Person person = new Person("    ");
+    @Test (expected = IllegalArgumentException.class)
+    public void Person_givenUsernameSpaces_thenThrowException(){
+        new Person("    ");
     }
 
     @Test
-    public void Person_givenFriends_thenFriendAdded() throws Exception {
+    public void Person_givenFriends_thenFriendAdded(){
         Person person = new Person("randomUsername");
         Person friend = new Person("friend");
         person.addFriend(friend);
@@ -36,7 +36,7 @@ public class PersonTest {
     }
 
     @Test
-    public void Person_givenFriend_thenBidirectionalRelationshipIsAdded() throws Exception{
+    public void Person_givenFriend_thenBidirectionalRelationshipIsAdded(){
         Person person = new Person("randomUsername");
         Person friend = new Person("friend");
         person.addFriend(friend);
@@ -44,22 +44,22 @@ public class PersonTest {
     }
 
     @Test (expected = Exception.class)
-    public void Person_givenSelfAsFriend_thenThrowException() throws Exception{
+    public void Person_givenSelfAsFriend_thenThrowException(){
         Person person = new Person("randomUsername");
         person.addFriend(person);
     }
 
-    @Test (expected = Exception.class)
-    public void Person_givenMessageFromNonFriend_thenThrowException() throws Exception{
+    @Test (expected = IllegalArgumentException.class)
+    public void Person_givenMessageFromNonFriend_thenThrowException(){
         Person person = new Person("randomUsername");
         Person nonFriend = new Person("nonFriend");
         Message message = new Message();
-        message.setSender(person);
+        message.setSender(nonFriend);
         person.receiveMessage(message);
     }
 
     @Test
-    public void Person_givenMessageFromFriend_thenReceiveMessage() throws Exception {
+    public void Person_givenMessageFromFriend_thenReceiveMessage(){
         Person person = new Person("randomUsername");
         Person friend = new Person("friend");
         person.addFriend(friend);
@@ -70,7 +70,7 @@ public class PersonTest {
     }
 
     @Test
-    public void Person_getReceivedMessages_giveMessages() throws Exception{
+    public void Person_getReceivedMessages_giveMessages(){
         Person person = new Person("randomUsername");
         Person friend = new Person("friend");
         person.addFriend(friend);

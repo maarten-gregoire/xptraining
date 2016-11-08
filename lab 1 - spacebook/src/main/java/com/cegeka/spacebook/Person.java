@@ -8,13 +8,9 @@ public class Person {
     private List<Person> friends = new ArrayList<>();
     private List<Message> messages = new ArrayList<>();
 
-    public Person(String name) throws Exception {
-        if (name == "")
-            throw new Exception("username can't be empty");
-        else if (name == null)
-            throw new Exception("username can't be null");
-        else if (("").equals(name.trim()))
-            throw new Exception("username can't be spaces");
+    public Person(String name){
+        if (name == null || name.trim().isEmpty())
+            throw new IllegalArgumentException("username can't be empty");
         else
             this.name = name;
     }
@@ -23,9 +19,9 @@ public class Person {
         return friends;
     }
 
-    public void addFriend(Person friend) throws Exception {
+    public void addFriend(Person friend){
         if(friend == this)
-            throw new Exception("friend can't be person");
+            throw new IllegalArgumentException("friend can't be person");
         else
             friends.add(friend);
 
@@ -33,11 +29,11 @@ public class Person {
             friend.addFriend(this);
     }
 
-    public void receiveMessage(Message message) throws Exception{
+    public void receiveMessage(Message message){
         if (friends.contains(message.getSender()))
             messages.add(message);
         else
-            throw new Exception("Only friends can send messages");
+            throw new IllegalArgumentException("Only friends can send messages");
     }
 
     public List<Message> getMessages() {

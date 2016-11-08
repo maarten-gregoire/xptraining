@@ -2,9 +2,6 @@ package com.cegeka.spacebook;
 
 import java.util.Date;
 
-/**
- * Created by maarteng on 8/11/2016.
- */
 public class Message {
     private Date date;
     private Person sender;

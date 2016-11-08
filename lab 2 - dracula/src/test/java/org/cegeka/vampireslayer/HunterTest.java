@@ -34,4 +34,13 @@ public class HunterTest {
 		assertThat(hunter.canHunt(huntingTime)).isTrue();
 	}
 
+	@Test
+	public void canHunt_givenMidnight_thenCanHunt() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2014, Calendar.APRIL, 12, 0, 0);
+		Date huntingTime = calendar.getTime();
+
+		assertThat(hunter.canHunt(huntingTime)).isTrue();
+	}
+
 }

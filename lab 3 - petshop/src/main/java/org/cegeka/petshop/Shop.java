@@ -1,15 +1,13 @@
 package org.cegeka.petshop;
 
-import com.google.common.collect.ImmutableSet;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+
+import static org.springframework.http.HttpMethod.POST;
 
 public class Shop {
 
@@ -25,18 +23,16 @@ public class Shop {
     }
 
     public Set<String> getItemsInStock() {
-        return ImmutableSet.copyOf(itemList);
+        return itemList;
     }
 
     public boolean callREST(String item) {
         HttpEntity<String> request = new HttpEntity<>(item);
 
-        //Map<String, String> urlVariables = new HashMap<>();
-
-        ResponseEntity<String> response = restTemplate.exchange("http://localhost:9002/additem", HttpMethod.POST, request, String.class);//, urlVariables);
+        ResponseEntity<String> response = restTemplate.exchange("http://localhost:9002/additem", POST, request, String.class);
         int code = response.getStatusCodeValue();
 
-        if(code == 200) {
+        if (code == 200) {
             return true;
         }
         return false;

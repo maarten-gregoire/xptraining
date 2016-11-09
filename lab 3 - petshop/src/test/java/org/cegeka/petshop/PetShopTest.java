@@ -1,29 +1,21 @@
 package org.cegeka.petshop;
 
-import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockserver.client.server.MockServerClient;
 import org.mockserver.junit.MockServerRule;
-import org.mockserver.model.HttpRequest;
-import org.mockserver.model.HttpResponse;
-
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockserver.model.HttpRequest.request;
+import static org.mockserver.model.HttpResponse.response;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PetShopTest {
@@ -79,14 +71,14 @@ public class PetShopTest {
 		String item = "Doggy Gucci bag";
 
 		mockServerClient.when(
-				HttpRequest.request()
+				request()
 						.withBody(item)
 						.withPath("/additem")
 						.withMethod("POST"))
-				.respond(HttpResponse.response()
+				.respond(response()
 						.withStatusCode(200));
 
-		Assertions.assertThat(addItem(item)).isTrue();
+		assertThat(addItem(item)).isTrue();
 	}
 
 }

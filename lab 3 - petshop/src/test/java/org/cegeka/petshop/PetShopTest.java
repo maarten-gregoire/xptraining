@@ -51,6 +51,15 @@ public class PetShopTest {
 	@Test
 	public void addItem_whenItem_thenAddsItemToStock() {
 		String item = "Doggy Gucci bag";
+
+
+		mockServerClient.when(
+				request()
+						.withBody(item)
+						.withPath("/additem")
+						.withMethod("POST"))
+				.respond(response()
+						.withStatusCode(200));
 		addItem(item);
 
 		Set<String> items = shop.getItemsInStock();
@@ -60,7 +69,17 @@ public class PetShopTest {
 
 	@Test
 	public void sendMail_whenItemAdded() {
+
 		String item = "Doggy Gucci bag";
+
+
+		mockServerClient.when(
+				request()
+						.withBody(item)
+						.withPath("/additem")
+						.withMethod("POST"))
+				.respond(response()
+						.withStatusCode(200));
 		addItem(item);
 
 		verify(mailClient, times(1)).sendMail(item);

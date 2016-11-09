@@ -19,46 +19,35 @@ public class Customer {
 		return _name;
 	}
 	
-	public String statement() {
-		double totalAmount = 0;
+	public String determineCheckoutStatement() {
+		return determineResultText(determineTotalAmount(), determineFrequentRenterPoints());
+	}
+
+	private int determineFrequentRenterPoints() {
 		int frequentRenterPoints = 0;
-		String result = "Rental Record for " + getName() + "\n";
-		
-		for (Rental each: _rentals) {
-			double thisAmount = 0;
-			
-			//determine amounts for each line
-			switch (each.getMovie().getPriceCode()) {
-			case Movie.REGULAR:
-				thisAmount += 2;
-				if (each.getDaysRented() > 2) 
-					thisAmount += (each.getDaysRented() - 2) * 1.5;
-				break;
-			case Movie.NEW_RELEASE:
-				thisAmount += each.getDaysRented() * 3;
-				break;
-			case Movie.CHILDRENS:
-				thisAmount += 1.5;
-				if (each.getDaysRented() > 3)
-					thisAmount += (each.getDaysRented() - 3) * 1.5;
-				break;
-			}
-			
-			// add frequent renter points
-			frequentRenterPoints++;
-			// add bonus for a two day new release rental
-			if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) && each.getDaysRented() > 1) 
-				frequentRenterPoints++;
-			
-			// show figures for this rental
-			result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(thisAmount) + "\n";
-			totalAmount += thisAmount;
+		for (Rental rental: _rentals) {
+			frequentRenterPoints += rental.getFrequentRenterPoints();
 		}
-		
-		// add footer lines
-		result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-		result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
-		
-		return result;
+		return frequentRenterPoints;
+	}
+
+	private double determineTotalAmount() {
+		double totalAmount = 0;
+		for (Rental rental: _rentals) {
+			totalAmount += rental.calculatePrice();
+		}
+		return totalAmount;
+	}
+
+	private String determineResultText(double totalAmount, int frequentRenterPoints) {
+		String resultText = "Rental Record for " + getName() + "\n";
+
+		for (Rental rental: _rentals) {
+			resultText += "\t" + rental.getMovie().getTitle() + "\t" + String.valueOf(rental.calculatePrice()) + "\n";
+		}
+
+		resultText += "Amount owed is " + String.valueOf(totalAmount) + "\n";
+		resultText += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
+		return resultText;
 	}
 }

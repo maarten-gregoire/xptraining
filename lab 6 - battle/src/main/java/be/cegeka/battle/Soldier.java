@@ -27,11 +27,8 @@ public class Soldier {
         this.weapon = weapon;
     }
 
-    public boolean fight(Soldier defender) {
-        if (this.getDamage() >= defender.getDamage()) {
-            return true;
-        }
-        return false;
+    public Fight attack(Soldier defender) {
+        return new Fight(this, defender);
     }
 }
 

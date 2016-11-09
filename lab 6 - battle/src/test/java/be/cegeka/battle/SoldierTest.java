@@ -32,23 +32,4 @@ public class SoldierTest {
         Soldier soldier = new Soldier("Piet soldaat");
         assertThat(soldier.getWeapon().getName()).isEqualTo("Bare fist");
     }
-
-    @Test
-    public void Soldier_givenFightStarted_thenStrongestWeaponWins() {
-        Soldier attacker = new Soldier("Maximus");
-        Soldier defender = new Soldier("Maarten");
-
-        assertThat(attacker.fight(defender)).isTrue();
-    }
-
-    @Test
-    public void Weapon_givenStrongerWeapon_thenShouldWinFight() {
-        Soldier attacker = new Soldier("Pierre");
-        Soldier defender = new Soldier("Marie");
-
-        attacker.equip(new Weapon(4));
-        defender.equip(new Weapon(2));
-
-        assertThat(attacker.fight(defender)).isTrue();
-    }
 }

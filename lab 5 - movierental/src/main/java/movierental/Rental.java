@@ -1,5 +1,7 @@
 package movierental;
 
+import movierental.Movie.Movie;
+
 public class Rental {
 
 	private Movie _movie;

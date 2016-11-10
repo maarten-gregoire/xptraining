@@ -1,14 +1,17 @@
 package movierental;
 
+import movierental.Movie.ChildrensMovie;
+import movierental.Movie.Movie;
+import movierental.Movie.NewReleaseMovie;
+import movierental.Movie.RegularMovie;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.*;
 
 public class MovieRegisterTest {
     @Test
     public void statementForRegularMovie() {
-        Movie movie1 = new Movie("Gone with the Wind");
+        Movie movie1 = new RegularMovie("Gone with the Wind");
         Rental rental1 = new Rental(movie1, 3); // 3 day rental
         MovieRegister movieRegister = new MovieRegister();
         Customer customer2 =
@@ -26,7 +29,7 @@ public class MovieRegisterTest {
 
     @Test
     public void statementForNewReleaseMovie() {
-        Movie movie1 = new NewMovie("Star Wars");
+        Movie movie1 = new NewReleaseMovie("Star Wars");
         Rental rental1 = new Rental(movie1, 3); // 3 day rental
         MovieRegister movieRegister = new MovieRegister();
         Customer customer2 =
@@ -64,9 +67,9 @@ public class MovieRegisterTest {
     public void statementForManyMovies() {
         Movie movie1 = new ChildrensMovie("Madagascar");
         Rental rental1 = new Rental(movie1, 6); // 6 day rental
-        Movie movie2 = new NewMovie("Star Wars");
+        Movie movie2 = new NewReleaseMovie("Star Wars");
         Rental rental2 = new Rental(movie2, 2); // 2 day rental
-        Movie movie3 = new Movie("Gone with the Wind");
+        Movie movie3 = new RegularMovie("Gone with the Wind");
         Rental rental3 = new Rental(movie3, 8); // 8 day rental
         MovieRegister movieRegister = new MovieRegister();
         Customer customer1

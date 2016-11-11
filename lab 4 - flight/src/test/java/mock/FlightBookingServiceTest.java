@@ -1,29 +1,43 @@
 package mock;
 
-import org.assertj.core.api.Assertions;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
 public class FlightBookingServiceTest {
 
-	private FlightBookingServiceImpl flightBookingServiceImpl;
-	private PersistenceManagerMock<Flight> persistenceManagerMock;
+	@InjectMocks
+	private FlightBookingService flightBookingService;
 
-	@Before
-	public void setUp() throws Exception {
-		persistenceManagerMock = new PersistenceManagerMock<Flight>();
-		flightBookingServiceImpl = new FlightBookingServiceImpl(persistenceManagerMock);
-	}
+	@Mock
+	private FlightRepository flightRepository;
 
 	@Test
-	public void bookSeatOnFlight() throws FlightFullyBookedException {
-		Flight flight = new FlightImpl(12);
-		persistenceManagerMock.expectLookup(Flight.class, 12, flight);
-
-		flightBookingServiceImpl.bookSeatOnFlight(12, "persoon");
-
-		Assertions.assertThat(flight.isPassengerOnFlight("persoon")).isTrue();
-		persistenceManagerMock.verify();
+	public void test_whenSeatBookedWithFlightIdAndPassenger_thenPassengerIsAdded() throws FlightFullyBookedException {
+		Flight flight = new Flight(100);
+		flight.setId(1);
+		when(flightRepository.getFlightById(flight.getId())).thenReturn(flight);
+		Passenger passenger = new Passenger("Arnold");
+		flightBookingService.bookSeat(flight.getId(), passenger);
+		assertThat(flight.getPassengers().contains(passenger)).isTrue();
 	}
+
+	@Test ( expected = FlightNotFoundException.class)
+	public void test_whenSeatBookedWithIdNotFound_thenThrowException() throws FlightFullyBookedException {
+		Flight flight = new Flight(100);
+		flight.setId(1);
+		when(flightRepository.getFlightById(flight.getId())).thenReturn(flight);
+		when(flightRepository.getFlightById(flight.getId()+1)).thenThrow(FlightNotFoundException.class);
+		Passenger passenger = new Passenger("Arnold");
+		flightBookingService.bookSeat(flight.getId() + 1, passenger);
+
+	}
+
 
 }

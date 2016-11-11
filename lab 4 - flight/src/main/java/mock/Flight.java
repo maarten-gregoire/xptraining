@@ -1,13 +1,44 @@
 package mock;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-public interface Flight {
+public class Flight {
 
-	void addPassenger(String person) throws FlightFullyBookedException;
-	boolean isPassengerOnFlight(String person);
-	Set<String> listPassengers();
-	int numberOfPassengers();
-	int maxNumberOfSeats();
-	
+	private List<Passenger> passengers = new ArrayList<>();
+	private int id;
+	private int maximumSeats;
+
+	public Flight(int maximumSeats) {
+		this.maximumSeats = maximumSeats;
+	}
+
+	public List<Passenger> getPassengers() {
+		return passengers;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void addPassenger(Passenger passenger) throws FlightFullyBookedException {
+		if (passengers.size() < maximumSeats)
+			passengers.add(passenger);
+		else
+			throw new FlightFullyBookedException("Flight fully booked");
+	}
+
+	public int getNumberOfPassengers() {
+		return passengers.size();
+	}
+
+	public boolean hasPassengerOnFlight(Passenger passenger) {
+		if (passengers.contains(passenger))
+			return true;
+		return false;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }
